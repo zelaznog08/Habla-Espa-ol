@@ -8,8 +8,7 @@ import {
   Menu, 
   X, 
   ArrowRight,
-  Sparkles,
-  Search
+  Sparkles
 } from "lucide-react";
 import Chat from "./components/Chat";
 import Flashcards from "./components/Flashcards";
@@ -17,16 +16,17 @@ import GrammarGuide from "./components/GrammarGuide";
 
 type Tab = "home" | "tutor" | "flashcards" | "grammar";
 
+// Move navigation outside to prevent re-creation on every render
+const NAVIGATION = [
+  { id: "home", name: "Início", icon: Globe },
+  { id: "tutor", name: "Tutor IA", icon: MessageSquare },
+  { id: "flashcards", name: "Flashcards", icon: Layers },
+  { id: "grammar", name: "Gramática", icon: BookOpen },
+];
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navigation = [
-    { id: "home", name: "Início", icon: Globe },
-    { id: "tutor", name: "Tutor IA", icon: MessageSquare },
-    { id: "flashcards", name: "Flashcards", icon: Layers },
-    { id: "grammar", name: "Gramática", icon: BookOpen },
-  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -46,7 +46,7 @@ export default function App() {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
-              {navigation.map((item) => (
+              {NAVIGATION.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id as Tab)}
@@ -84,7 +84,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden bg-white border-b border-zinc-100 p-4 space-y-2"
           >
-            {navigation.map((item) => (
+            {NAVIGATION.map((item) => (
               <button
                 key={item.id}
                 onClick={() => {
