@@ -1,11 +1,18 @@
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RefreshCw, ChevronRight, ChevronLeft, Volume2, Sparkles, Loader2 } from "lucide-react";
 import { generateFlashcards, Flashcard, generateSpeech } from "../services/geminiService";
 
 export default function Flashcards() {
-  const [cards, setCards] = useState<Flashcard[]>([]);
+  const [cards, setCards] = useState<Flashcard[]>(() => {
+    const saved = localStorage.getItem("flashcards");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem("flashcards", JSON.stringify(cards));
+  }, [cards]);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [topic, setTopic] = useState("Viagens");

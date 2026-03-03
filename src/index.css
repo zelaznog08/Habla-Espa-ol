@@ -40,3 +40,17 @@
 .markdown-body code {
   @apply font-mono bg-zinc-100 px-1 rounded text-sm;
 }
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}

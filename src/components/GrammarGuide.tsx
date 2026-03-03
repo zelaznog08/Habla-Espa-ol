@@ -15,6 +15,10 @@ const PRESET_TOPICS: GrammarTopic[] = [
   { title: "Ser vs Estar", level: "Iniciante", duration: "15 min" },
   { title: "Pretérito Indefinido", level: "Intermediário", duration: "20 min" },
   { title: "Subjuntivo", level: "Avançado", duration: "30 min" },
+  { title: "Imperativo", level: "Intermediário", duration: "15 min" },
+  { title: "Pronomes de Objeto", level: "Intermediário", duration: "25 min" },
+  { title: "Porqués", level: "Iniciante", duration: "10 min" },
+  { title: "Falsos Amigos", level: "Iniciante", duration: "10 min" },
 ];
 
 export default function GrammarGuide() {
@@ -22,6 +26,7 @@ export default function GrammarGuide() {
   const [explanation, setExplanation] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [levelFilter, setLevelFilter] = useState<string | null>(null);
 
   const handleSelectTopic = async (topic: string) => {
     setSelectedTopic(topic);
@@ -38,9 +43,11 @@ export default function GrammarGuide() {
     }
   };
 
-  const filteredTopics = PRESET_TOPICS.filter(t => 
-    t.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTopics = PRESET_TOPICS.filter(t => {
+    const matchesSearch = t.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesLevel = !levelFilter || t.level === levelFilter;
+    return matchesSearch && matchesLevel;
+  });
 
   return (
     <div className="max-w-4xl mx-auto space-y-12">
@@ -60,6 +67,22 @@ export default function GrammarGuide() {
                   Entenda as estruturas fundamentais do espanhol com explicações claras e exemplos práticos focados em falantes de português.
                 </p>
                 
+                <div className="flex flex-wrap gap-2">
+                  {["Todos", "Iniciante", "Intermediário", "Avançado"].map((lvl) => (
+                    <button
+                      key={lvl}
+                      onClick={() => setLevelFilter(lvl === "Todos" ? null : lvl)}
+                      className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${
+                        (levelFilter === lvl || (lvl === "Todos" && !levelFilter))
+                          ? "bg-spanish-red text-white"
+                          : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                      }`}
+                    >
+                      {lvl}
+                    </button>
+                  ))}
+                </div>
+
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
                   <input 

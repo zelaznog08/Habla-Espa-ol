@@ -1,15 +1,39 @@
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
-import { Send, User, Bot, Sparkles, Loader2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Send, User, Bot, Sparkles, Loader2, Trash2 } from "lucide-react";
 import { getSpanishResponse, ChatMessage } from "../services/geminiService";
 import { marked } from "marked";
 
 export default function Chat() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: "model", text: "¡Hola! Soy el Prof. Luis, tu tutor de español. ¿Cómo te llamas y qué te gustaría aprender hoy?" }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    const saved = localStorage.getItem("chat_messages");
+    return saved ? JSON.parse(saved) : [
+      { role: "model", text: "¡Hola! Soy el Prof. Luis, tu tutor de español. ¿Cómo te llamas y qué te gustaría aprender hoje?" }
+    ];
+  });
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("chat_messages", JSON.stringify(messages));
+  }, [messages]);
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
+
+  const clearChat = () => {
+    if (confirm("¿Seguro que quieres borrar toda la conversación?")) {
+      setMessages([
+        { role: "model", text: "¡Hola! Soy el Prof. Luis, tu tutor de español. ¿Cómo te llamas y qué te gustaría aprender hoje?" }
+      ]);
+    }
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -43,7 +67,16 @@ export default function Chat() {
             <p className="text-xs text-zinc-500">Tutor de IA • Online</p>
           </div>
         </div>
-        <Sparkles className="text-spanish-yellow" size={18} />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={clearChat}
+            className="p-2 text-zinc-400 hover:text-spanish-red transition-colors"
+            title="Borrar conversación"
+          >
+            <Trash2 size={18} />
+          </button>
+          <Sparkles className="text-spanish-yellow" size={18} />
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
@@ -82,6 +115,7 @@ export default function Chat() {
             </div>
           </motion.div>
         )}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="p-4 border-t border-zinc-100">
