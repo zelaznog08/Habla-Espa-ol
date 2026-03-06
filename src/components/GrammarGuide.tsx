@@ -93,10 +93,10 @@ export default function GrammarGuide() {
 
             <div className="grid sm:grid-cols-2 gap-6">
               {filteredTopics.map((topic, i) => (
-                <div 
+                <button
                   key={i} 
                   onClick={() => handleSelectTopic(topic.title)}
-                  className="group p-6 bg-white border border-zinc-100 rounded-3xl hover:border-spanish-red/30 transition-all cursor-pointer shadow-sm"
+                  className="group p-6 bg-white border border-zinc-100 rounded-3xl hover:border-spanish-red/30 transition-all cursor-pointer shadow-sm text-left"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400">{topic.level}</span>
@@ -108,7 +108,7 @@ export default function GrammarGuide() {
                       <ArrowRight size={16} />
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
               {filteredTopics.length === 0 && searchQuery && (
                 <div 

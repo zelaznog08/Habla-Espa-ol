@@ -63,7 +63,10 @@ export default function App() {
                   )}
                 </button>
               ))}
-              <button className="px-4 py-2 bg-zinc-900 text-white rounded-full text-sm font-medium hover:bg-zinc-800 transition-all shadow-sm">
+              <button
+                onClick={() => setActiveTab("tutor")}
+                className="px-4 py-2 bg-zinc-900 text-white rounded-full text-sm font-medium hover:bg-zinc-800 transition-all shadow-sm"
+              >
                 Começar Agora
               </button>
             </div>
@@ -161,7 +164,10 @@ export default function App() {
 
             {/* Features - Bento Grid */}
             <section className="grid md:grid-cols-3 gap-6">
-              <div className="md:col-span-2 bg-zinc-900 rounded-[32px] p-8 text-white flex flex-col justify-between min-h-[300px] group overflow-hidden relative">
+              <div
+                onClick={() => setActiveTab("tutor")}
+                className="md:col-span-2 bg-zinc-900 rounded-[32px] p-8 text-white flex flex-col justify-between min-h-[300px] group overflow-hidden relative cursor-pointer hover:bg-zinc-800 transition-colors"
+              >
                 <div className="relative z-10 space-y-4">
                   <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
                     <MessageSquare className="text-spanish-yellow" />
@@ -174,9 +180,12 @@ export default function App() {
                 <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-spanish-red/20 blur-3xl rounded-full group-hover:bg-spanish-red/30 transition-all"></div>
               </div>
 
-              <div className="bg-white border border-zinc-100 rounded-[32px] p-8 flex flex-col justify-between min-h-[300px] shadow-sm">
+              <div
+                onClick={() => setActiveTab("flashcards")}
+                className="bg-white border border-zinc-100 rounded-[32px] p-8 flex flex-col justify-between min-h-[300px] shadow-sm cursor-pointer hover:border-spanish-red/20 transition-all group"
+              >
                 <div className="space-y-4">
-                  <div className="w-12 h-12 bg-zinc-50 rounded-2xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-zinc-50 rounded-2xl flex items-center justify-center group-hover:bg-spanish-red/5 transition-colors">
                     <Layers className="text-spanish-red" />
                   </div>
                   <h3 className="text-2xl font-serif">Flashcards Dinâmicos</h3>
@@ -184,7 +193,7 @@ export default function App() {
                     Memorização espaçada potencializada por IA. Gere cards sobre qualquer tema instantaneamente.
                   </p>
                 </div>
-                <button onClick={() => setActiveTab("flashcards")} className="text-spanish-red font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all">
+                <button className="text-spanish-red font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
                   Explorar <ArrowRight size={14} />
                 </button>
               </div>
