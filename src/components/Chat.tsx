@@ -33,7 +33,7 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-[600px] bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
-      <div className="p-4 border-bottom border-zinc-100 bg-zinc-50 flex items-center justify-between">
+      <div className="p-4 border-b border-zinc-100 bg-zinc-50 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-spanish-red flex items-center justify-center text-white shadow-sm">
             <Bot size={20} />
